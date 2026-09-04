@@ -5,7 +5,6 @@ import { ManagerSalaryStrategy } from './strategies/manager-salary.strategy.js';
 import { SalaryCalculationStrategy } from './strategies/salary-calculation.strategy.js';
 import { SalesSalaryStrategy } from './strategies/sales-salary.strategy.js';
 
-/** Selects the staff-type-specific salary strategy. */
 @Injectable()
 export class SalaryCalculatorFactory {
   constructor(

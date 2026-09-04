@@ -12,13 +12,6 @@ describe('Salary (e2e)', () => {
   beforeAll(async () => {
     app = await createTestApp();
 
-    // Documented fixture (all joined 2020-01-01):
-    //   Manager A
-    //    ├── Employee B
-    //    ├── Sales C
-    //    │   └── Employee D
-    //    └── Manager E
-    //        └── Employee F
     ids = {};
     const a = await postStaff(app, { name: 'A', joinedAt: JOINED, type: 'MANAGER' });
     ids.a = a.body.id;

@@ -10,25 +10,14 @@ import { StaffRepository } from '../staff/staff.repository.js';
 import { SalaryCalculatorFactory } from './salary-calculator.factory.js';
 import { NodeCalculation, round2, SalaryCycleError } from './salary.types.js';
 
-/**
- * Orchestrates salary calculation.
- *
- * Responsibilities:
- * - loads the staff hierarchy and the company configuration;
- * - validates `asOf` and per-member `joinedAt` dates;
- * - performs a memoized post-order (children-first) traversal;
- * - builds the strategy context (direct/descendant salaries at the same asOf);
- * - rounds every final salary to two decimal places.
- *
- * The staff-type-specific formulas live in the strategies, NOT here.
- */
+
 @Injectable()
 export class SalaryService {
   constructor(
     private readonly staffRepository: StaffRepository,
     private readonly companyService: CompanyService,
     private readonly factory: SalaryCalculatorFactory,
-  ) {}
+  ) { }
 
   async getIndividualSalary(id: number, asOf: string): Promise<number> {
     this.assertAsOf(asOf);
@@ -69,13 +58,6 @@ export class SalaryService {
     return round2(total);
   }
 
-  /**
-   * Recursively calculates a staff member's salary at `asOf`.
-   *
-   * Children are always calculated before their supervisor (post-order) and
-   * results are memoized per request, so each member is computed exactly once
-   * and the total payroll is not double-counted.
-   */
   private calculateNode(
     staff: StaffEntity,
     asOf: string,
